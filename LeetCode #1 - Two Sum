@@ -1,0 +1,24 @@
+	// Author: Amrita (GitHub: fijianDreamer)
+  // Date: March 18, 2021
+  
+  public static int[] twoSum(int[] nums, int target)
+  {
+		int[] found2Sum = {0,1};
+    // nums.length-1 because we have j start at i+1. Make sure to not go
+    // past the boundaries
+		for(int i = 0; i < nums.length-1; i++)
+		{
+      // start j at i+1 because there is no need to repeat comparisons
+			for(int j = i+1; j < nums.length; j++)
+			{
+				// add the two #s, if i + j == target, save the values and return
+				if(target == (nums[i] + nums[j]))
+				{
+					found2Sum[0] = i;
+					found2Sum[1] = j;
+					return found2Sum;
+				}
+			} // end j loop
+		} // end i loop
+		return found2Sum;
+  } 
