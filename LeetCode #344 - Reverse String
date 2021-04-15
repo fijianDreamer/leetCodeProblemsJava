@@ -1,0 +1,23 @@
+// Instructions: Write a function that reverses a string. The input string is given as an array of characters s.
+
+class Solution {
+    public void reverseString(char[] s) 
+    {
+        helper(0,s); // Send 1st index & rest of string
+    }
+    
+    public static void helper (int index, char[]s)
+    {
+    	// If at the end of the string, return
+    	if( s == null || index >= s.length)
+    	{
+    		return;
+    	}
+    	// temp holds the value in index
+    	char temp = s[index];
+    	// else move on to the next
+    	helper(index + 1, s);
+    	// put the value of temp into s[index]
+    	s[s.length-(index + 1)] = temp;
+    }
+}
