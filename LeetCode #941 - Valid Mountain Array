@@ -1,0 +1,66 @@
+// Instructions: Given an array of integers arr, return true if and only if it is a valid mountain array.
+// Recall that arr is a mountain array if and only if:
+// arr.length >= 3
+// There exists some i with 0 < i < arr.length - 1 such that:
+// arr[0] < arr[1] < ... < arr[i - 1] < arr[i]
+// arr[i] > arr[i + 1] > ... > arr[arr.length - 1]
+
+class Solution {
+    public boolean validMountainArray(int[] arr) {
+        // Make sure the array is >= 3. If not, return false;
+    	if(arr.length <3)
+    	{
+    		return false;
+    	}
+    	// Booleans to flag to see if the mountain is strictly
+    	// increasing
+    	boolean mIncrease = false; // Mountain Increasing
+    	boolean mDecrease = false; // Mountain Decreasing
+    	int decreasing = 0; // The peak of the mountain
+    	
+    	// See if the array is strictly increasing.
+    	// While strictly increasing & != to i+1 (that's a duplicate)
+    	// go to the next # until you hit the peak
+    	for(int i = 0; i < arr.length; i++)
+    	{
+    		if(i+1 < arr.length) // Make sure you don't go out of bounds
+    		{
+	    		if(arr[i] == arr[i+1]) // the #s are the same. Return false
+	    		{
+	    			return false;
+	    		}
+	    		else if(arr[i] < arr[i+1]) // Set mIncrease to true
+	    		{
+	    			mIncrease = true;
+	    		}
+	    		else if(arr[i] > arr[i+1]) // peak found
+	    		{
+	    			decreasing = i;
+	    			break;
+	    		}
+    		}
+    	} // increase for loop
+    	
+    	// Now check strictly decreasing
+    	for(; decreasing < arr.length; decreasing++)
+    	{
+    		if(decreasing+1 < arr.length)
+    		{
+    			if((arr[decreasing] == arr[decreasing+1]) ||
+    					(arr[decreasing] < arr[decreasing+1]))
+    			{
+    				return false;
+    			}
+    			else if(arr[decreasing] > arr[decreasing+1])
+    			{
+    				mDecrease = true;
+    			}
+    		}
+    	}// end decrease for loop
+    	if(mIncrease == true && mDecrease == true)
+    	{
+    		return true;
+    	}
+    	return false;
+    } // end of function
+}
