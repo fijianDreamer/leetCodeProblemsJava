@@ -1,0 +1,31 @@
+    public String mostCommonWord(String paragraph, String[] banned) 
+    {
+        HashSet<String> bannedWords = new HashSet<>();
+        // For each word in the string array banned, add that word to Hash         // Set banned words.
+        for(String word: banned)
+        {
+            bannedWords.add(word);
+        }
+        // Replace all non-characters w/space. Make all characters
+        // lowercase, split by space.
+        HashMap<String, Integer> counts = new HashMap<>();
+        for(String word: paragraph.replaceAll("[^a-zA-Z]", " ").toLowerCase().split(" "))
+        {
+            // Word on banned list? No, put in map, +1
+            if(!bannedWords.contains(word))
+            {
+                counts.put(word, counts.getOrDefault(word, 0) + 1);
+            }
+        }
+        String result = "";
+        for(String key: counts.keySet())
+        {
+            // If there is a result > current result, set that to new result.
+            if(result.equals("") || counts.get(key) > counts.get(result))
+            {
+                result = key;
+            }
+        }
+        // Display result
+        return result;
+    }
