@@ -1,0 +1,67 @@
+class Solution {
+    public int myAtoi(String s) {
+        
+                
+        // First, get rid of any whitespaces by using trim()
+        s = s.trim();
+        
+        // If string is empty, return 0
+        if(s == null || s.length() == 0) 
+        {
+            return 0;
+        }
+        
+        // Make result double to handle overflow cases
+        double result = 0;
+        
+        
+        // Sign is for positive or negative sign. Set as false(default) as per instructions
+        boolean isNegative = false;
+        
+        int startIndex = 0;
+        
+        if(s.charAt(0) == '+' || s.charAt(0) == '-') 
+        {
+            if(s.charAt(0) == '-') 
+            {
+                isNegative = true;
+            }
+            ++startIndex; // Go to next index
+        }
+        
+        
+        // Normal Cases = "123"
+        for(int i = startIndex; i < s.length(); i++) 
+        {
+            // if ascii value is below or above 0 or 9, break. These are non numeric characters
+            if(s.charAt(i) < '0' || s.charAt(i) > '9') 
+            { 
+                break;
+            }
+            // Convert the string # to an actual #
+            int digitValue = (int)(s.charAt(i) - '0');
+            result = (result*10) + digitValue;
+        }
+        
+        // If the number is -, toggle the result
+        if(isNegative) 
+        {
+            result = -result;
+        }
+        
+        // Handle underflow or overflow of the # as per the instructions
+        if(result < Integer.MIN_VALUE) 
+        {
+            return Integer.MIN_VALUE;
+        }
+        if(result > Integer.MAX_VALUE) 
+        {
+            return Integer.MAX_VALUE;
+        }
+        // Everything is normal, return result
+        return (int)result;
+        
+        // Time Complexity is O(n)
+        
+    }
+}
