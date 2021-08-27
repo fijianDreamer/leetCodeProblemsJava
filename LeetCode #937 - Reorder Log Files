@@ -1,0 +1,67 @@
+   /* Instructions: You are given an array of logs. Each log is a space-delimited string of words, where the first word is the identifier.
+    * There are two types of logs:
+    * Letter-logs: All words (except the identifier) consist of lowercase English letters.
+    * Digit-logs: All words (except the identifier) consist of digits.
+    * Reorder these logs so that:
+    * The letter-logs come before all digit-logs.
+    * The letter-logs are sorted lexicographically by their contents. If their contents are the same, then sort them lexicographically by their identifiers.
+    * The digit-logs maintain their relative ordering.
+    * Return the final order of the logs.
+    */
+   
+   public String[] reorderLogFiles(String[] logs) {
+
+        List<String> lLogs = new ArrayList<>();
+        List<String> dLogs = new ArrayList<>();
+        
+        // for each log, determine if it is a letter log or a digit log. Put each log in its respective
+        // ArrayList
+        for (String log : logs) {
+            if(Character.isDigit(log.split("\\s+")[1].charAt(0))) {
+                dLogs.add(log);
+            }
+            else {
+                lLogs.add(log);
+            }
+        }
+
+        // Sort the logs
+        Collections.sort(lLogs, new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                String[] s1 = o1.split("\\s+");
+                String[] s2 = o2.split("\\s+");
+
+                StringBuilder sb1 = new StringBuilder();
+                StringBuilder sb2 = new StringBuilder();
+
+                for (int i=1; i<s1.length; i++) {
+                    sb1.append(s1[i]).append(" ");
+                }
+
+                for (int i=1; i<s2.length; i++) {
+                    sb2.append(s2[i]).append(" ");
+                }
+
+                if (sb1.toString().compareTo(sb2.toString()) == 0) {
+                    return s1[0].compareTo(s2[0]);
+                }
+
+                return sb1.toString().compareTo(sb2.toString());
+            }
+        });
+
+        String[] result = new String[logs.length];
+
+        // Put the results in the results log using the for each loop
+        int i = 0;
+        for (String log : lLogs) {
+            result[i++] = log;
+        }
+
+        for (String log : dLogs) {
+            result[i++] = log;
+        }
+
+        return result;
+    }
