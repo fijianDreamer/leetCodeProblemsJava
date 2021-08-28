@@ -1,0 +1,23 @@
+/* Given an integer array nums and an integer k, return the kth largest element in the array.
+ * Note that it is the kth largest element in the sorted order, not the kth distinct element.
+*/
+
+class Solution 
+{
+    public int findKthLargest(int[] nums, int k) 
+    {
+        PriorityQueue<Integer>minHeap = new PriorityQueue<Integer>();
+        // for every # we're given, minHeap add i
+        for(int i: nums)
+        {
+            minHeap.add(i);
+            // Remove w/e is at the root of the heap if bigger than k
+            if(minHeap.size() > k)
+            {
+                minHeap.remove();
+            }
+        }
+        return minHeap.remove();
+        // O(n) run time
+    }
+}
