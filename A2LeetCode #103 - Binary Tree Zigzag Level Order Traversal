@@ -1,0 +1,66 @@
+/* Instructions: Given the root of a binary tree, return the zigzag level order traversal of its nodes' values. (i.e., from left to right,
+ * then right to left for the next level and alternate between).
+ * Time Complexity: O(n) - Visiting all the nodes of tree. Tree is length n.
+ */
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution 
+{
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) 
+    {
+        List<List<Integer>> result = new ArrayList<>();
+        // If the tree is empty, return
+        if(root == null)
+        {
+            return result;
+        }
+        Queue<TreeNode> tnQueue = new LinkedList<>();
+        tnQueue.add(root); // Root is always going to be first
+        int level = 0; // Root is always at level 0, always going L -> R
+        
+        // While there is something in the tnQueue, get the nodes
+        while(!tnQueue.isEmpty())
+        {
+            int quLength = tnQueue.size();
+            List<Integer> levelResult = new ArrayList<>();
+            for(int i = 0; i < quLength; i++)
+            {
+                TreeNode temp = tnQueue.poll();
+                if(temp.left != null) // if there is a left leaf, add
+                {
+                    tnQueue.add(temp.left);
+                }
+                if(temp.right != null)
+                {
+                    tnQueue.add(temp.right);
+                }
+                // Check the level #, Even levels go L -> R, odd go R <- L
+                if(level % 2 == 0)
+                {
+                    levelResult.add(temp.val);
+                }
+                else
+                {
+                    levelResult.add(0, temp.val); // Add to the left
+                }
+            }
+                level++; // Goes to next level #
+                result.add(levelResult);
+        }
+        return result;
+    }
+}
