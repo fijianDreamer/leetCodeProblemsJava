@@ -1,0 +1,51 @@
+/* Instructions: Given an m x n 2D binary grid grid which represents a map of '1's (land) and '0's (water), return the number of islands.
+ * An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four 
+ * edges of the grid are all surrounded by water.
+ */
+
+class Solution 
+{
+    // helper function. Checks top, right, left, and bottom for "land" aka "1"
+    void dfs(char[][] grid, int row, int column) 
+    {
+        int newRow = grid.length;
+        int newColumn = grid[0].length;
+        // Check to see if we are outside the bounds, or "touching water"
+        if (row < 0 || column < 0 || row >= newRow || column >= newColumn || grid[row][column] == '0') 
+        {
+          return;
+        }
+
+        grid[row][column] = '0'; // There is a '1' so replace with 0 so we don't count it again
+        dfs(grid, row - 1, column); // Checking the top
+        dfs(grid, row + 1, column); // Bottom
+        dfs(grid, row, column - 1); // Left
+        dfs(grid, row, column + 1); // Right
+    }
+    
+    public int numIslands(char[][] grid) 
+    {
+        // If grid is empty, or "middle of ocean"
+        if (grid == null || grid.length == 0) 
+        {
+            return 0;
+        }
+
+    int newRow = grid.length;
+    int newColumn = grid[0].length;
+    int numOfIslands = 0;
+    for (int row = 0; row < newRow; ++row) 
+    {
+      for (int column = 0; column < newColumn; ++column) 
+      {
+        if (grid[row][column] == '1') 
+        {
+          ++numOfIslands;
+          dfs(grid, row, column);
+        }
+      }
+    }
+
+    return numOfIslands;
+    }
+}
