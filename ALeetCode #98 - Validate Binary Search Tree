@@ -1,0 +1,48 @@
+/* Instructions: Given the root of a binary tree, determine if it is a valid binary search tree (BST).
+ * A valid BST is defined as follows:
+ * The left subtree of a node contains only nodes with keys less than the node's key.
+ * The right subtree of a node contains only nodes with keys greater than the node's key.
+ * Both the left and right subtrees must also be binary search trees.
+ */
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution 
+{
+    // helper function
+    public boolean isValidHelper(TreeNode root, Integer low, Integer high)
+    {
+        // Empty trees are also considered valid BSTs, so return true. Asked here
+        // so we don't write the code multiple times
+        if(root == null)
+        {
+            return true;
+        }
+        // Is Left Node > root or is Right Node < root? return false
+        if((low != null && root.val <= low) || (high != null && root.val >= high))
+        {
+            return false;
+        }
+        // Check subtree
+        return isValidHelper(root.right, root.val, high) && isValidHelper(root.left, low, root.val);
+    }
+    
+    public boolean isValidBST(TreeNode root) 
+    {
+
+        return isValidHelper(root, null, null);
+    }
+}
