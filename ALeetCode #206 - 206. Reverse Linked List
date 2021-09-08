@@ -1,0 +1,31 @@
+/* Given the head of a singly linked list, reverse the list, and return the reversed list.
+ */
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution 
+{
+    public ListNode reverseList(ListNode head) 
+    {
+        ListNode previous = null; // Since we are at the beginning of the list, there is no previous
+        ListNode current = head;
+        ListNode tempNode = null;
+        // Go through the linked list. Swap the nodes as you go
+        while(current != null)
+        {
+            tempNode = current.next;
+            current.next = previous; // Points to the last node
+            previous = current;
+            current = tempNode;
+        }
+        return previous;
+    }
+}
