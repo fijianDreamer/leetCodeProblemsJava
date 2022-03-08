@@ -1,0 +1,48 @@
+import java.util.*; 
+import java.io.*;
+
+class Main {
+
+  public static String ArrayAdditionI(int[] arr) {
+    // code goes here
+    // Sort the array & get the max # in array
+    Arrays.sort(arr);
+    // Loop through the array and see if the #s equal the max
+    int sum = 0;
+    int length = arr.length;
+    int max = arr[length-1];
+    // Case 1: if every single # adds up to the max, return true
+    for(int i = 0; i < arr.length-1; i++)
+    {
+      sum += arr[i];
+    }
+    if(sum == max)
+    {
+      return "true";
+    }
+    // End Case 1
+
+    // Case 2 - Similar to 2Sum
+    for(int i = 0; i < arr.length-2; i++)
+    {
+      sum = arr[i];
+      for(int j = i+1; j < arr.length-1; j++)
+      {
+        sum += arr[j];
+        if(sum == max)
+        {
+          return "true";
+        }
+      }
+    }
+    // End Case 2
+    return "false";
+  }
+
+  public static void main (String[] args) {  
+    // keep this function call here     
+    Scanner s = new Scanner(System.in);
+    System.out.print(ArrayAdditionI(s.nextLine())); 
+  }
+
+}
