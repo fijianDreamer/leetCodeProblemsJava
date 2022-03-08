@@ -1,0 +1,50 @@
+import java.util.*; 
+import java.io.*;
+
+class Main {
+
+  public static String LetterCount(String str) {
+    // code goes here
+    int count = 0; // Keeps track of the greatest # of repeated letters so far
+    int temp = 0; // Keeps track of current word
+    // Split string and get word
+    String[] splitted = str.split(" ");
+    String longestWord = splitted[0]; // Save to 1st word by default
+    // Go through each word in the sentence, and find the first longest word
+    for(int i = 0; i < splitted.length; i++)
+    {
+      for(int j = 0; j < splitted[i].length(); j++) // length of each word
+      {
+        temp = 0;
+        for (int k = 0; k < splitted[i].length(); k++)
+        {
+          if(splitted[i].charAt(j) == splitted[i].charAt(k))
+          {
+            temp++;
+          }
+        }
+        if(count < temp)
+        {
+          count = temp;
+          longestWord = splitted[i];
+          temp = 0;
+        }
+      }
+    }
+    // No words, return -1
+    if(count == 1)
+    {
+      return "-1";
+    }
+    // Else return results
+    str = longestWord;
+    return str;
+  }
+
+  public static void main (String[] args) {  
+    // keep this function call here     
+    Scanner s = new Scanner(System.in);
+    System.out.print(LetterCount(s.nextLine())); 
+  }
+
+}
