@@ -1,0 +1,66 @@
+import java.util.*; 
+import java.io.*;
+
+class Main {
+
+  public static String SerialNumber(String str) 
+  {
+    // code goes here
+    // 3 sets of 3 + 2 dots, length should be 11
+    if(str.length() != 11)
+    {
+      return "false";
+    }
+    String[] snTokens = str.split("\\.");
+    int set = 0;
+    int num100 = 0;
+    int num10 = 0;
+    int num1 = 0;
+    int set1 = 0;
+    int set2 = 0;
+    int set3 = 0;
+    for(int i = 0; i < snTokens.length; i++)
+    {
+      // num100 = snTokens/100;
+      set = Integer.parseInt(snTokens[i]);
+      num100 = set / 100;
+      // num10 = num100 / 10;
+      num10 = (set / 10) % 10;
+      // num1 = num10 / 1;
+      num1 = (set % 10);
+      // is set 1 even?
+      if(i == 0)
+      {
+        set1 = num100 + num10 + num1;
+        if(((set1 % 2) != 0) || (num1 < num10))
+        {
+          return "false";
+        }
+      }
+      else if(i == 1)
+      {
+        set2 = num100 + num10 + num1;
+        if(((set2 % 2) == 0) || (num1 < num10))
+        {
+          return "false";
+        }
+      }
+      else if(i == 2)
+      {
+        if(num1 < num10)
+        {
+          return "false";
+        } 
+      }
+
+    }   
+    return "true";
+  }
+
+  public static void main (String[] args) {  
+    // keep this function call here     
+    Scanner s = new Scanner(System.in);
+    System.out.print(SerialNumber(s.nextLine())); 
+  }
+
+}
