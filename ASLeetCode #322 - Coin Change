@@ -1,0 +1,30 @@
+// Instructions: You are given an integer array coins representing coins of different denominations and an integer amount representing a total amount of money.
+
+Return the fewest number of coins that you need to make up that amount. If that amount of money cannot be made up by any combination of the coins, return -1.
+
+You may assume that you have an infinite number of each kind of coin.
+
+
+class Solution 
+{
+    public int coinChange(int[] coins, int amount) 
+    {
+        int max = amount + 1;
+        int[] totalCoins = new int[amount + 1];
+        Arrays.fill(totalCoins, max);
+        totalCoins[0] = 0;
+        for(int i = 1; i <= amount; i++)
+        {
+            for(int j = 0; j < coins.length; j++)
+            {
+                if(coins[j] <= i)
+                {
+                    totalCoins[i] = Math.min(totalCoins[i], totalCoins[i - coins[j]] + 1);
+                }
+            }
+        }
+        return totalCoins[amount] > amount ? -1 : totalCoins[amount];
+        // Time Complexity: O(S*n) b/c in each step we need to find F(i)
+        // Space Complexity: O(S) b/c we're using extra space for memoization
+    }
+}
