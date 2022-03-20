@@ -1,0 +1,40 @@
+class Solution 
+{
+    public int sumLLeavesHelper(TreeNode tree, boolean isLeft)
+    {
+        int sum = 0;
+        // Base Case: it is the left node w/no leaves
+        if(tree.left == null && tree.right == null)
+        {
+            if(isLeft == true)
+            {
+                return tree.val;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        // left node
+        if(tree.left != null)
+        {
+            sum += sumLLeavesHelper(tree.left, true);
+        }
+        // right node
+        if(tree.right != null)
+        {
+            sum += sumLLeavesHelper(tree.right, false);
+        }
+        return sum;
+    }
+    public int sumOfLeftLeaves(TreeNode root) 
+    {
+        // First, check if tree is empty, if so, return 0
+        if(root == null)
+        {
+            return 0;
+        }
+        // call the helper
+        return sumLLeavesHelper(root, false);
+    }
+}
