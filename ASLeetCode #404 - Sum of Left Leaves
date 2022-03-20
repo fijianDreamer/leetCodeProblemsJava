@@ -8,6 +8,7 @@ class Solution
         // Base Case: it is the left node w/no leaves
         if(tree.left == null && tree.right == null)
         {
+            // if left side, add it's value
             if(isLeft == true)
             {
                 return tree.val;
@@ -17,12 +18,12 @@ class Solution
                 return 0;
             }
         }
-        // left node
+        // left node. Add leaf b/c on left side
         if(tree.left != null)
         {
             sum += sumLLeavesHelper(tree.left, true);
         }
-        // right node
+        // right node. Don't add leaf, b/c it's on right side.
         if(tree.right != null)
         {
             sum += sumLLeavesHelper(tree.right, false);
