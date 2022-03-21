@@ -21,3 +21,33 @@ class Solution {
     	s[s.length-(index + 1)] = temp;
     }
 }
+
+// March 20th Submission -
+
+class Solution 
+{   
+    public void reverseHelper(char[] s)
+    {
+        // get the length of the string
+        int halfLength = s.length / 2;
+        // have a temp variable to hold the temp value while swapping
+        char temp = ' ';
+        for(int i = 0, j = s.length-1;  i < halfLength; i++, j-- ) 
+        {
+                temp = s[i];
+                s[i] = s[j];
+                s[j] = temp;
+        } // end i loop
+    }
+    
+    public void reverseString(char[] s) 
+    {
+        // if the string is empty, return
+        if(s.length == 0 || s == null)
+        {
+            return;
+        }
+        // else reverse the string
+       reverseHelper(s);
+    }
+}
