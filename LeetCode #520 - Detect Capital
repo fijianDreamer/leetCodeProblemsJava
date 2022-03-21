@@ -1,0 +1,82 @@
+/* Instructions: We define the usage of capitals in a word to be right when one of the following cases holds:
+ *
+ * All letters in this word are capitals, like "USA".
+ * All letters in this word are not capitals, like "leetcode".
+ * Only the first letter in this word is capital, like "Google".
+ * Given a string word, return true if the usage of capitals in it is right.
+ *
+ */
+
+class Solution 
+{
+    public boolean allCaps(String word)
+    {
+        // take the string, see if all caps, if not return false
+        for(int i = 2; i < word.length(); i++)
+        {
+            if(!Character.isUpperCase(word.charAt(i))) // letter is lowercase
+            {
+                // if true, continue, else return false
+                return false;
+            }
+        } // end for loop
+        return true;
+    }
+    
+    public boolean firstCapOnly(String word)
+    {
+        // take the string, see if all lowercase, if not return false
+        for(int i = 2; i < word.length(); i++)
+        {
+            if(!Character.isLowerCase(word.charAt(i))) // letter is uppercase
+            {
+                // if true, return false
+                return false;
+            }
+        } // end for loop
+        return true;
+    }
+    
+    public boolean detectCapitalUse(String word) 
+    {
+        // boolean variable - if the 1st letter is a capital letter
+        boolean isFirstCap = false;
+        boolean is2ndCap = false;
+        // check the 1st letter
+        if(Character.isUpperCase(word.charAt(0)))
+        {
+            isFirstCap = true;
+            // check 2nd letter
+            if(word.length() > 1)
+            {
+                if(Character.isUpperCase(word.charAt(1)))
+                {
+                    is2ndCap = true;
+                }
+            }
+            else // length is 1, is capital, return true
+            {
+                return true;
+            }
+        }
+        // call function for 2nd letter
+        if(isFirstCap == true && is2ndCap == true)
+        {
+            return allCaps(word);
+        }
+        else if(isFirstCap == true && is2ndCap == false) // case 2
+        {
+            return firstCapOnly(word);
+        }
+        // call function for all lowercase
+        for(int i = 1; i < word.length(); i++)
+        {
+            if(!Character.isLowerCase(word.charAt(i))) // letter is uppercase
+            {
+                // if true, return false
+                return false;
+            }
+        } // end for loop
+        return true;
+    }
+}
