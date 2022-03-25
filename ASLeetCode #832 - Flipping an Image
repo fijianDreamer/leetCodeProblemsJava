@@ -1,0 +1,39 @@
+/* Instructions: Given an n x n binary matrix image, flip the image horizontally, then invert it, and return the resulting image.
+ *
+ * To flip an image horizontally means that each row of the image is reversed.
+ *
+ * For example, flipping [1,1,0] horizontally results in [0,1,1].
+ * To invert an image means that each 0 is replaced by 1, and each 1 is replaced by 0.
+ *
+ * For example, inverting [0,1,1] results in [1,0,0].
+ */
+
+class Solution 
+{
+    public int[][] flipAndInvertImage(int[][] image) 
+    {
+        // if the matrix is empty, return
+        if(image == null || image[0].length == 0)
+        {
+            return image;
+        }
+        // flip the matrix -- 1 1 0 flipped is 0 1 1, turn matrix around / swap
+        int temp = 0;
+        int col = image[0].length;
+        // for each row in image
+        for(int[] row: image)
+        {
+            for(int i = 0; i < (col+1)/2; i++) // get 1st half of row
+            {
+                temp = row[i] ^ 1; // ^ is bitwise OR -- flippin matrix
+                row[i] = row[col-1-i] ^ 1; // inverting the image
+                row[col-1-i] = temp; // finish swapping
+            }
+        } // end for each
+
+        // return matrix
+        return image;
+    }
+    /* Time Complexity: O(N)O(N), where N is the total number of elements in A.
+    Space Complexity: O(1)O(1) in additional space complexity. */
+}
