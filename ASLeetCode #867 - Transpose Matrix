@@ -1,0 +1,33 @@
+/* Instructions: Given a 2D integer array matrix, return the transpose of matrix.
+ *
+ * The transpose of a matrix is the matrix flipped over its main diagonal, switching the matrix's row and column indices.
+ */
+
+class Solution 
+{
+    public int[][] transpose(int[][] matrix) 
+    {
+        // if empty or null, return
+        if(matrix == null || matrix[0].length == 0)
+        {
+            return matrix;
+        }
+        // create a new matrix for the transposed matrix
+        int mLength = matrix.length;
+        int nLength = matrix[0].length;
+        int[][] tMatrix = new int[nLength][mLength];
+        // go thru matrix, if i & j == don't swap, else swap. then set current values to 0
+        for(int i = 0; i < mLength; i++)
+        {
+            for(int j = 0; j < nLength; j++)
+            {
+                // swap the values in tMatrix
+                tMatrix[j][i] = matrix[i][j];
+            } // end j loop
+        } // end i loop
+        //return
+        return tMatrix;
+    }
+    // time complexity: O(R*C), where R & C are the # of rows and columns in the given matrix
+    // space complexity: O(R*C), the space that is used by the answer
+}
