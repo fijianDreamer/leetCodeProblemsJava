@@ -1,0 +1,28 @@
+/* Instructions: Given two strings s and t, return true if t is an anagram of s, and false otherwise.
+ *
+ * An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
+ */
+
+class Solution 
+{
+    public boolean isAnagram(String s, String t) 
+    {
+        if(s.length() != t.length()) // not an anagram
+        {
+            return false;
+        }
+        // turn the strings to CharArrays
+        char[] sChar = s.toCharArray();
+        char[] tChar = t.toCharArray();
+        // Now you can sort the arrays and then compare
+        Arrays.sort(sChar);
+        Arrays.sort(tChar);
+        // see if the # of characters are the same, return the results
+        return Arrays.equals(sChar, tChar);   
+    }
+    // Time Complexity: O(nlogn) b/c sorting is O(nlogn). Then b/c we're comparing 2 strings, that's
+    // O(n). B/c the sorting takes so much time, the overall time complexity is O(nlogn)
+    
+    // Space Complexity: O(1) b/c toCharArray() makes copy of the string, so O(n), but it's a language
+    // dependent detail and the paramter types can be changed, so O(1)
+}
