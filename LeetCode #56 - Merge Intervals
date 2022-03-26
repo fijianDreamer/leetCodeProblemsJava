@@ -1,0 +1,32 @@
+/* Instructions: Given an array of intervals where intervals[i] = [starti, endi], merge all overlapping intervals, and return an array of the 
+ * non-overlapping intervals that cover all the intervals in the input.
+ */
+
+class Solution 
+{
+    public int[][] merge(int[][] intervals) 
+    {
+        // sort the integers by the starting value
+        Arrays.sort(intervals, (a,b) -> Integer.compare(a[0], b[0]));
+        // store in a LinkedList since we don't know the size of the merged array
+        LinkedList<int[]> merged = new LinkedList<>();
+        // for each interval in intervals, see which overlap
+        for(int[] interval : intervals)
+        {
+            // if the list is empty, or current interval doesn't overlap, append
+            if(merged.isEmpty() || merged.getLast()[1] < interval[0])
+            {
+                merged.add(interval);
+            }
+            // else, there is overlap, so merge the intervals
+            else
+            {
+                merged.getLast()[1] = Math.max(merged.getLast()[1], interval[1]);
+            }
+        } // end for loop
+        
+        // return by converting merged to an array
+        return merged.toArray(new int[merged.size()][]);
+        
+    } // end function
+}
