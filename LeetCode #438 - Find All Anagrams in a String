@@ -1,0 +1,60 @@
+/* Instructions: Given two strings s and p, return an array of all the start indices of p's anagrams in s. You may return the answer in any order.
+ *
+ * An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
+ */
+
+class Solution 
+{
+    public List<Integer> findAnagrams(String s, String p) 
+    {
+        // Variables
+        int sLen = s.length();
+        int pLen = p.length();
+        List<Integer> foundAnagrams = new ArrayList();
+        
+        // if s is smaller than p, then there are no anagrams. Return empty list
+        if(sLen < pLen)
+        {
+            return foundAnagrams;
+        }
+        
+        // Have 2 int[] size 26 to represent the alphabet
+        int[] sCount = new int[26];
+        int[] pCount = new int[26];
+        
+        // For each char in p, add to pCount, so we can reference it
+        for(char ch: p.toCharArray())
+        {
+            pCount[(int)(ch - 'a')]++;
+        } // end for each
+        
+        // Now go thru s, if there is a match, add to foundAnagrams
+        for(int i = 0; i < sLen; i++)
+        {
+            // +1 to the right side
+            sCount[(int)(s.charAt(i) - 'a')]++;
+            
+            // Now -1 from left side if greater than pLen
+            if(i >= pLen)
+            {
+                sCount[(int)(s.charAt(i - pLen) - 'a')]--;
+            }
+            
+            // Compare the 2 reference arrays (pCount & sCount). If it's the same, add to foundAnagrams
+            if(Arrays.equals(pCount, sCount))
+            {
+                foundAnagrams.add(i - pLen + 1);
+            }
+        }
+        
+        // return
+        return foundAnagrams;
+    } // end of function
+    
+    // Time Complexity: O(N subscript s) b/c we do 1 pass along the string when N subscript s >= N
+    // subscript p which costs O(N subscript s + N subscript p). Since we only do this when N subscript     
+    // s >= N subscript p, the time complexity simplifies to O(N subscript s)
+    
+    // Space Complexity: O(K) pCount & sCount contain K elements each. Since K is fixed at 26 for this
+    // problem, this can be considered as O(1) space.
+}
