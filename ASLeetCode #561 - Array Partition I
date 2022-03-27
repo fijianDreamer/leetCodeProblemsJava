@@ -1,0 +1,18 @@
+/* Instructions: Given an integer array nums of 2n integers, group these integers into n pairs (a1, b1), (a2, b2), ..., (an, bn) 
+ * such that the sum of min(ai, bi) for all i is maximized. Return the maximized sum.
+ */
+class Solution 
+{
+    public int arrayPairSum(int[] nums) 
+    {
+        // First sort the arrays to get the "optimal pairings" -> all the min from the increasing pairs
+        Arrays.sort(nums);
+        int max = 0;
+        // start at the beginning, pair off and return the min of the pairs. return max
+        for(int i  = 0; i < nums.length - 1; i += 2) 
+        {
+            max += Math.min(nums[i], nums[i + 1]);
+        }
+        return max;
+    }
+}
