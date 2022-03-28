@@ -1,0 +1,63 @@
+/* Instructions: You are keeping score for a baseball game with strange rules. The game consists of several rounds, where the scores of past rounds 
+ * may affect future rounds' scores.
+ *
+ * At the beginning of the game, you start with an empty record. You are given a list of strings ops, where ops[i] is the ith operation you must 
+ * apply to the record and is one of the following:
+ *
+ * An integer x - Record a new score of x.
+ * "+" - Record a new score that is the sum of the previous two scores. It is guaranteed there will always be two previous scores.
+ * "D" - Record a new score that is double the previous score. It is guaranteed there will always be a previous score.
+ * "C" - Invalidate the previous score, removing it from the record. It is guaranteed there will always be a previous score.
+ * Return the sum of all the scores on the record.
+ */
+
+class Solution 
+{
+    public int calPoints(String[] ops) 
+    {
+        // Variables
+        Stack<Integer> cStack = new Stack();
+        int total = 0;
+        int top = 0;
+        int newTop = 0;
+        // Go thru the string. For each operation, apply to the record via rules
+        for(String op: ops)
+        {
+            if(op.equals("+"))
+            {
+                // add the 2 numbers and push the result
+                top = cStack.pop(); // the last # inserted (placeholder)
+                newTop = top + cStack.peek(); // sum of 2nd to last # + last #
+                cStack.push(top); // put the last value back
+                cStack.push(newTop); // push the total
+            }
+            else if(op.equals("D"))
+            {
+                // get the top value, double it (*2) and push result
+                newTop = cStack.peek() * 2;
+                cStack.push(newTop);
+            }
+            else if(op.equals("C"))
+            {
+                cStack.pop(); // remove last #
+            }
+            else
+            {
+                cStack.push(Integer.valueOf(op)); // it's a digit, add to stack
+            }
+        } // end for each
+        
+        // while stack is not empty, add to total
+        while(!cStack.isEmpty())
+        {
+            total += cStack.pop();
+        }
+        
+        // return
+        return total;
+    } // end function
+    
+    // Time Complexity: O(N) b/c N is the length of ops. Also only parsing thru the arraiy once O(1)
+    
+    // Space Complexity: O(N), the space that's used to store the stack
+}
