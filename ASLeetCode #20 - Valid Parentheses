@@ -1,0 +1,50 @@
+class Solution 
+{
+    public boolean isValid(String s) 
+    {
+        // Variables
+        int sLen = s.length(); // get the length of s
+        char[] sChar = s.toCharArray();
+        Stack<Character> sStack = new Stack<Character>();  
+        
+        // if the item is an open bracket, push, else pop
+        for(int i = 0; i < sLen; i++)
+        {
+            if(sChar[i] == ')' || sChar[i] == '}' || sChar[i] == ']') // closing bracket
+            {
+                // the top of the stack must be the correct open bracket, else it's false
+                if(sStack.size() == 0)
+                {
+                    return false;
+                }
+                else if(sChar[i] == ')' && sStack.peek() != '(')
+                {
+                    return false;
+                }
+                else if(sChar[i] == '}' && sStack.peek() != '{')
+                {
+                    return false;
+                }
+                else if(sChar[i] == ']' && sStack.peek() != '[')
+                {
+                    return false;
+                }
+                else
+                {
+                sStack.pop(); // is valid, so remove
+                }
+            }
+            else 
+            {// push
+                sStack.push(sChar[i]);
+            }
+        }
+        // if the size of the stack is 0, return true, else return false
+        if(sStack.size() == 0)
+        {
+            return true;
+        }
+        // return
+        return false;
+    }
+}
