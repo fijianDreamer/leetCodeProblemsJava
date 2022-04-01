@@ -1,0 +1,40 @@
+/* Instructions: Given two strings s and t, return true if they are equal when both are typed into empty text editors. '#' means a backspace character.
+
+Note that after backspacing an empty text, the text will continue empty.
+
+*/
+
+class Solution 
+{
+    public String build(String a)
+    {
+        // Variables
+        Stack<Character> result = new Stack();
+        
+        // for each char in A, if it's an '#' pop, else push
+        for(char c: a.toCharArray())
+        {
+            if(c != '#')
+            {
+                result.push(c);
+            }
+            else if (!result.empty())
+            {
+                // if result is not empty, pop
+                result.pop();
+            }
+        } // end for each
+        
+        // convert result to string and return
+        return String.valueOf(result);
+    }
+    
+    public boolean backspaceCompare(String s, String t) 
+    {
+        return build(s).equals(build(t));
+    }
+    
+    // Time Complexity: O(M+N), where M, NM,N are the lengths of S and T respectively.
+    
+    // Space Complexity: O(M + N)O(M+N)
+}
