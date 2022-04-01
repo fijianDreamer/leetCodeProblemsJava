@@ -1,0 +1,44 @@
+/* Instructions: Given a balanced parentheses string s, return the score of the string.
+ *
+ * The score of a balanced parentheses string is based on the following rule:
+ *
+ * "()" has score 1.
+ * AB has score A + B, where A and B are balanced parentheses strings.
+ * (A) has score 2 * A, where A is a balanced parentheses string.
+ */
+
+class Solution 
+{
+    public int scoreOfParentheses(String s) 
+    {
+        // Variables
+        Stack<Integer> paren = new Stack();
+        paren.push(0); // The current score
+        int a;
+        int b;
+        
+        // for each character in s
+        for(char c: s.toCharArray())
+        {
+            if(c == '(')
+            {
+                // if there is a '(', add 0
+                paren.push(0);
+            }
+            else
+            {
+                // get the score
+                a = paren.pop();
+                b = paren.pop();
+                paren.push(b + Math.max(2*a, 1)); // Add the correct score, 1 or 2*a
+            }
+        } // end for each
+
+        // return the score
+        return paren.pop();
+    } // end function
+    
+    // Time Complexity: O(N)O(N), where NN is the length of S.
+    
+    // Space Complexity: O(N)O(N), the size of the stack.
+}
