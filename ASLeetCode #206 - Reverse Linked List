@@ -28,4 +28,8 @@ class Solution
         }
         return previous;
     }
+    
+     // Time Complexity: O(n). Assume that nn is the list's length, the time complexity is O(n)O(n).
+    
+    // Space Complexity: O(1)
 }
