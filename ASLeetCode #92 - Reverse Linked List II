@@ -1,0 +1,69 @@
+/* Instructions: 
+
+ */
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution 
+{
+    public ListNode reverseBetween(ListNode head, int left, int right) 
+    {
+        // Variables
+        int length = 0; // keep track of where I am in the list. Currently at 1st node
+        ListNode temp = null;
+        ListNode curr = head;
+        ListNode prev = null;
+        ListNode result = head;
+        
+        // Go to left position
+        while(left > 1)
+        {
+            prev = curr; // 2
+            curr = curr.next; // 3
+            left--;
+            right--;
+        }
+        
+        // The following pointers fix the final connections
+        ListNode con = prev;
+        ListNode tail = curr;
+        
+        // while left <= right, swap
+        while(right > 0)
+        {
+            temp = curr.next; // 4
+            curr.next = prev; // 2
+            prev = curr; // 3
+            curr = temp; // 4
+            right--;
+        }
+        
+        // Adjust the final connections!
+        if(con != null)
+        {
+            con.next = prev;
+        }
+        else
+        {
+            head = prev;
+        }
+        tail.next = curr;
+        
+        // return head
+        return head;
+    }
+    
+    // Time Complexity: O(N) considering the list consists of NN nodes. We process each of the nodes at
+    // most once (we don't process the nodes after the n^{th}n th node from the beginning.
+    
+    // Space Complexity: O(1) since we simply adjust some pointers in the original linked list and only
+    // use O(1)O(1) additional memory for achieving the final result.
+}
