@@ -45,4 +45,7 @@ class Solution
 
         return isValidHelper(root, null, null);
     }
+    
+    // Time complexity : O(N) since we visit each node exactly once.
+    // Space complexity : O(N) since we keep up to the entire tree.
 }
