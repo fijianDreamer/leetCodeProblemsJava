@@ -1,0 +1,61 @@
+/* Instructions: Given the root of an n-ary tree, return the postorder traversal of its nodes' values.
+ *
+ * Nary-Tree input serialization is represented in their level order traversal. Each group of children is separated by the null value
+ *
+ * Example: Input: root = [1,null,3,2,4,null,5,6]
+ *          Output: [5,6,3,2,4,1]
+ */
+
+/*
+// Definition for a Node.
+class Node {
+    public int val;
+    public List<Node> children;
+
+    public Node() {}
+
+    public Node(int _val) {
+        val = _val;
+    }
+
+    public Node(int _val, List<Node> _children) {
+        val = _val;
+        children = _children;
+    }
+};
+*/
+
+class Solution 
+{
+    public List<Integer> postorder(Node root) 
+    {
+        // Variables
+        LinkedList<Integer> result = new LinkedList<>();
+        LinkedList<Node> stack = new LinkedList<>();
+        
+        // if list is null, return
+        if(root == null)
+        {
+            return result;
+        }
+        // Add the root to the stack
+        stack.add(root);
+        // While the stack isn't empty, add the node
+        while(!stack.isEmpty())
+        {
+            Node node = stack.pollLast();
+            result.addFirst(node.val);
+            // for each item that isn't null, add that item's children
+            for(Node item : node.children)
+            {
+                if(item != null)
+                {
+                    stack.add(item);
+                }
+            } // end for each
+        } // end while loop
+        
+        // return
+        return result;
+    } // end of function
+}
