@@ -1,0 +1,82 @@
+/* Instructions: Given the heads of two singly linked-lists headA and headB, return the node at which the two lists intersect. If the two linked lists 
+ * have no intersection at all, return null.
+ *
+ * For example, the following two linked lists begin to intersect at node c1:
+ *
+ * The test cases are generated such that there are no cycles anywhere in the entire linked structure.
+ * Note that the linked lists must retain their original structure after the function returns.
+ *
+ * Custom Judge:
+ *
+ * The inputs to the judge are given as follows (your program is not given these inputs):
+ *
+ * intersectVal - The value of the node where the intersection occurs. This is 0 if there is no intersected node.
+ * listA - The first linked list.
+ * listB - The second linked list.
+ * skipA - The number of nodes to skip ahead in listA (starting from the head) to get to the intersected node.
+ * skipB - The number of nodes to skip ahead in listB (starting from the head) to get to the intersected node.
+ * The judge will then create the linked structure based on these inputs and pass the two heads, headA and headB to your program. If you correctly 
+ * return the intersected node, then your solution will be accepted.
+ */
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution 
+{
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) 
+    {
+        // Variables
+        Set<ListNode> bNodes = new HashSet<ListNode>();
+        
+        // Go thru headB and store in a hash table
+        while(headB != null)
+        {
+            bNodes.add(headB);
+            headB = headB.next;
+        } // end while
+        
+        // Now go thru headA. If we find the node pointed to by headA, in the set containing headB
+        // nodes, return that node
+        while(headA != null)
+        {
+            if(bNodes.contains(headA))
+            {
+                return headA;
+            }
+            // else go to the next node
+            headA = headA.next;
+        }
+        
+        // Intersection not found, return null
+        return null;
+        
+    } // end function
+    
+    /* Time Complexity: O(N+M) : Firstly, we need to build up the hash table. It costs O(1)O(1) to 
+     * insert an item into a hash table, and we need to do this for each of the MM nodes in list B.
+     * This gives a cost of O(M)O(M) for building the hash table.
+     *
+     * Secondly, we need to traverse list A, and for each node, we need to check whether or not it is 
+     * in the hash table. In the worst case, there will not be a match, requiring us to check all NN
+     * nodes in list A. As it is also O(1)O(1) to check whether or not an item is in a hash table, this
+     * checking has a total cost of O(N)O(N).
+     *
+     * Finally, combining the two parts, we get O(M) + O(N) = O(M + N)O(M)+O(N)=O(M+N).
+     */
+    
+    /* Space Complexity:  O(M) : As we are storing each of the nodes from list B into a hash table, 
+     * the hash table will require O(M)O(M) space. Note that we could have instead stored the nodes 
+     * of list A into the hash table, this would have been a space complexity of O(N)O(N). Unless we
+     * know which list is longer though, it doesn't make any real difference.
+     */
+
+}
