@@ -1,0 +1,70 @@
+/* Instructions: Given the root of a binary tree, return the length of the diameter of the tree.
+ *
+ * The diameter of a binary tree is the length of the longest path between any two nodes in a tree. This path may or may not pass through the root.
+ *
+ * The length of a path between two nodes is represented by the number of edges between them.
+ */
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution 
+{
+    // Global Variable to keep track of the longest path
+    int diameter;
+    
+    private int diameterHelper(TreeNode node)
+    {
+        // if the node is empty, return 0
+        if(node == null)
+        {
+            return 0;
+        }
+        
+        // Variables
+        int leftSide = 0;
+        int rightSide = 0;
+        
+        // Now recursively find the longest path in the left & right children
+        leftSide = diameterHelper(node.left);
+        rightSide = diameterHelper(node.right);
+        
+        // if the left + right paths are larger than the diameter, update diameter
+        diameter = Math.max(diameter, (leftSide + rightSide));
+        
+        // return the longest diameter. +1 for the path connecting the node & its parent
+        return Math.max(leftSide, rightSide) + 1;
+        
+    } // end function
+    
+    public int diameterOfBinaryTree(TreeNode root) 
+    {
+        diameter = 0;
+        // Call the helper function
+        diameterHelper(root);
+        return diameter;
+    } // end function
+    
+    // Let N be the # of nodes in the tree
+    
+    // Time Complexity: O(N) b/c in our recursion function longestPath, we only enter and exit from each
+    // node once. We know this because each node is entered from its parent, and in a tree, nodes only 
+    // have one parent.
+    
+    // Space Complexity: O(N) : The space complexity depends on the size of our implicit call stack
+    // during our DFS, which relates to the height of the tree. In the worst case, the tree is skewed 
+    // so the height of the tree is O(N). If the tree is balanced, it'd be O(logN).
+    
+}
