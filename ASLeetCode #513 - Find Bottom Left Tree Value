@@ -1,0 +1,51 @@
+// Instructions: Given the root of a binary tree, return the leftmost value in the last row of the tree.
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+
+
+class Solution 
+{
+    // Global Variables
+    int result;
+    int maxLevel = 0;
+    public int findBottomLeftValue(TreeNode root) 
+    {
+        // Variables
+        int level = 1; // at the root
+        result = root.val; // current leftmost value is the root's value
+        helper(root.left, level);
+        helper(root.right, level);
+        return result;
+    }
+    
+    public void helper(TreeNode root, int level)
+    {
+        // Base Case: At the end of tree
+        if(root == null)
+        {
+            return;
+        }
+        // Set the level, and return the root's value
+        if(level > maxLevel){
+            maxLevel = level;
+            result = root.val;
+        }
+        // Call the next leaves & update the level
+        helper(root.left, level+1);
+        helper(root.right, level+1);
+    }
+} // end class
