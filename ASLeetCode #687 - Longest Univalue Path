@@ -1,0 +1,70 @@
+/* Instructions: Given the root of a binary tree, return the length of the longest path, where each node in the path has the same value. This path may
+ * or may not pass through the root.
+ *
+ *The length of the path between two nodes is represented by the number of edges between them.
+ */
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution 
+{
+    // Variables
+    int longest;
+    
+    public int sameNum(TreeNode root)
+    {
+        // if root & left == same #, longest++, root & left == same # longest++
+        // go to next level if same ++ else continue
+        // rVal = the current root value that has a multiple
+
+        if(root == null)
+        {
+            return 0;
+        }
+        
+        // Variables
+        int left = 0;
+        int right = 0;
+        int arrowL = 0, arrowR = 0;
+        
+        left = sameNum(root.left);
+        right = sameNum(root.right);
+        if(root.left != null && root.left.val == root.val)
+        {
+            arrowL += left + 1;
+        }
+        if(root.right != null && root.right.val == root.val)
+        {
+            arrowR += right + 1;
+        }
+        longest = Math.max(longest, arrowL + arrowR);
+        return Math.max(arrowL, arrowR);
+    }
+    
+    public int longestUnivaluePath(TreeNode root) 
+    {
+        
+        // Variables
+        longest = 0;
+        sameNum(root);
+        return longest;
+    }
+    
+    // Time Complexity: O(N), where N is the number of nodes in the tree. We process every node once.
+    
+    // Space Complexity: O(H), where H is the height of the tree. Our recursive call stack could be up
+    // to H layers deep.
+}
