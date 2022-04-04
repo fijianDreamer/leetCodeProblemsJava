@@ -1,0 +1,63 @@
+/* Given a string s, find the length of the longest substring without repeating characters.
+ */
+
+class Solution 
+{
+    public int lengthOfLongestSubstring(String s) 
+    {
+        Integer[] chars = new Integer[128];
+        int left = 0;
+        int right = 0;
+        int result = 0;
+        
+        while (right < s.length()) 
+        {
+            char r = s.charAt(right);
+
+            Integer index = chars[r];
+            if (index != null && index >= left && index < right) {
+                left = index + 1;
+            }
+
+            result = Math.max(result, right - left + 1);
+
+            chars[r] = right;
+            right++;
+        }
+
+        return result;
+    }
+}
+
+-----------------------------------------------------------------------------------------------------------------------
+
+// HashMap Approach (Sliding Windows Approach)
+class Solution 
+{
+    public int lengthOfLongestSubstring(String s) 
+    {
+        // Variables
+        int sLen = s.length();
+        int result = 0;
+        // the current index of the character
+        Map<Character, Integer> map = new HashMap<>();
+        
+        // Trying to extend the range [i,j] (sliding window approach)
+        for(int j = 0, i = 0; j < sLen; j++)
+        {
+            if(map.containsKey(s.charAt(j)))
+            {
+                i = Math.max(map.get(s.charAt(j)), i);
+            }
+            result = Math.max(result, j - i + 1);
+            map.put(s.charAt(j), j + 1);
+        } // end for loop
+        
+        // return
+        return result;
+    } // end function
+    
+    // Time Complexity: O(n). Index j will iterate n times.
+    
+    // Space Complexity: (HashMap) : O(min(m, n)).
+}
