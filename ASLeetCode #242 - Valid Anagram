@@ -26,3 +26,42 @@ class Solution
     // Space Complexity: O(1) b/c toCharArray() makes copy of the string, so O(n), but it's a language
     // dependent detail and the paramter types can be changed, so O(1)
 }
+
+------------------------------------------------------------------------------------------------------------------------------
+class Solution 
+{
+    public boolean isAnagram(String s, String t) 
+    {
+        // Variables
+        HashMap<Character,Integer> map = new HashMap<>();
+        int sLen = s.length();
+        int tLen = t.length();
+        
+        if(sLen != tLen)
+        {
+            return false;
+        }
+        
+        for(int i = 0 ; i < sLen; i++)
+        {
+            // Increment the counter for each letter in s & decrement the counter for each letter in t
+            map.put(s.charAt(i),map.getOrDefault(s.charAt(i),0) + 1);
+            map.put(t.charAt(i),map.getOrDefault(t.charAt(i),0) - 1 );
+        }
+        
+        // Check if the counter reaches back to 0, if it doesnt, return false
+        for(char c : map.keySet())
+        {
+            if(map.get(c) != 0)
+            {
+                return false;
+            }
+        }
+        
+        // Return
+        return true;
+    }
+    
+    // Time Complexity: is still O(n) because accessing the counter table is a constant time operation.
+    // Space Complexity: becomes O(n) because of the hashtable.
+}
