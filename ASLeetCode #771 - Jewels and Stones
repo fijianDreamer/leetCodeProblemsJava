@@ -1,0 +1,41 @@
+/* Instructions: You're given strings jewels representing the types of stones that are jewels, and stones representing the stones you have. Each 
+ * character in stones is a type of stone you have. You want to know how many of the stones you have are also jewels.
+ *
+ * Letters are case sensitive, so "a" is considered a different type of stone from "A".
+ */
+
+class Solution 
+{
+    public int numJewelsInStones(String jewels, String stones) 
+    {
+        // Variables
+        Set<Character> map = new HashSet();
+        // convert jewels and stones to char array
+        char[] j = jewels.toCharArray();
+        char[] s = stones.toCharArray();
+        int total = 0;
+        
+        // add the jewels values to the HashMap
+        for(char jewel : j)
+        {
+            map.add(jewel);
+        }
+        
+        // for each character in stones, see if it is in jewels, if so +1
+        for(char stone : s)
+        {
+            if(map.contains(stone))
+            {
+                total++;
+            }
+        }
+        
+        // return total
+        return total;
+    } // end of function
+    
+    // Time Complexity: O(J.length+S.length). The O(J.length) part comes from creating
+    // J. The O(S.length) part comes from searching S.
+
+    // Space Complexity: O(J.length).
+}
