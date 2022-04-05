@@ -1,0 +1,40 @@
+/* Instructions: A sentence is a string of single-space separated words where each word consists only of lowercase letters.
+ *
+ * A word is uncommon if it appears exactly once in one of the sentences, and does not appear in the other sentence.
+ *
+ * Given two sentences s1 and s2, return a list of all the uncommon words. You may return the answer in any order.
+ */
+
+class Solution 
+{
+    public String[] uncommonFromSentences(String s1, String s2) 
+    {
+        // Variables
+        HashMap<String, Integer> map = new HashMap();
+        List<String> result = new LinkedList();
+        
+        // for each word in s1 and s2, split by " " & add to the map
+        for(String word : s1.split(" "))
+        {
+            map.put(word, map.getOrDefault(word, 0) + 1);
+        }
+        for(String word : s2.split(" "))
+        {
+            map.put(word, map.getOrDefault(word, 0) + 1);
+        }
+        
+        // if the word was seen only once, return that
+        for(String word : map.keySet())
+        {
+            if(map.get(word) == 1)
+            {
+                result.add(word);
+            }
+        } // end for each
+        
+        return result.toArray(new String[result.size()]);
+    } // end function
+    
+    // Time Complexity: O(M+N), where M,N are the lengths of A and B respectively.
+    // Space Complexity: O(M + N), the space used by map.
+}
