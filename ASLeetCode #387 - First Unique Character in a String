@@ -28,4 +28,8 @@
         }
         // Unique char doesn't exist. Return -1
         return -1;
+            
+    // Time Complexity: O(N) since we go through the string of length N two times.
+    
+    // Space Complexity: O(1) because English alphabet contains 26 letters.
     }
