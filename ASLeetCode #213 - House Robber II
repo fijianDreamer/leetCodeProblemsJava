@@ -1,0 +1,62 @@
+/* Instructions: You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed. All houses at 
+ * this place are arranged in a circle. That means the first house is the neighbor of the last one. Meanwhile, adjacent houses have a security system 
+ * connected, and it will automatically contact the police if two adjacent houses were broken into on the same night.
+ *
+ * Given an integer array nums representing the amount of money of each house, return the maximum amount of money you can rob tonight without alerting 
+ * the police.
+ */
+
+class Solution 
+{
+    public int rob(int[] nums) 
+    {
+        // Variables
+        int money1 = 0;
+        int money2 = 0;
+        
+        if(nums.length == 0)
+        {
+            return 0;
+        }
+        if(nums.length == 1)
+        {
+            return nums[0];
+        }
+        
+        // helper - start with the 1st house, don't include the last house b/c they're adjacent
+        money1 = helper(nums, 0, nums.length - 2);
+        // for this helper, start with the 2nd house (index 1) and include the last house b/c we're
+        // not including the 1st house
+        money2 = helper(nums, 1, nums.length - 1);
+        
+        // return
+        return Math.max(money1, money2);
+    }
+    
+    public int helper(int[] nums, int start, int end)
+    {
+        // go thru the index, making sure to skip the next house b/c they're adjacent. Find the max
+        // profit and return
+        int t1 = 0;
+        int t2 = 0;
+        int temp = 0;
+        int current = 0;
+        
+        for(int i = start; i <= end; i++)
+        {
+            temp = t1;
+            current = nums[i];
+            t1 = Math.max(current + t2, t1);
+            t2 = temp;
+        }
+        
+        // return
+        return t1;
+    }
+    
+    // Time Complexity: O(N) where N is the size of nums. We are accumulating results as we are scanning
+    // nums.
+
+    // Space Complexity: O(1) since we are not consuming additional space other than variables for two
+    // previous results and a temporary variable to hold one of the previous results.
+}
