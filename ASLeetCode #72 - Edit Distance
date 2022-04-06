@@ -1,0 +1,60 @@
+/* Instructions: Given two strings word1 and word2, return the minimum number of operations required to convert word1 to word2.
+ *
+ * You have the following three operations permitted on a word:
+ *
+ * Insert a character
+ * Delete a character
+ * Replace a character
+ */
+
+class Solution 
+{
+    public int minDistance(String word1, String word2) 
+    {
+        // Variables
+        int w1Len = word1.length();
+        int w2Len = word2.length();
+        int[][] d = new int[w1Len + 1][w2Len + 1]; // array to store the conversions
+        int left = 0;
+        int down = 0;
+        int leftDown = 0;
+        
+        // If one of the strings are empty, return the length of the 2 words
+        if(w1Len * w2Len == 0)
+        {
+            return (w1Len + w2Len);
+        }
+        
+        // Initial boundaries 
+        for(int i = 0; i < w1Len + 1; i++)
+        {
+            d[i][0] = i;
+        } // end for loop
+        for(int j = 0; j < w2Len + 1; j++)
+        {
+            d[0][j] = j;
+        } // end j for loop
+        
+        // Using Dynammic Programming to compute. Already filled the boundaries, now fill the rest
+        for(int i = 1; i < w1Len + 1; i++)
+        {
+            for(int j = 1; j < w2Len + 1; j++)
+            {
+                left = d[i - 1][j] + 1;
+                down = d[i][j - 1] + 1;
+                leftDown = d[i - 1][j - 1];
+                if(word1.charAt(i - 1) != word2.charAt(j - 1))
+                {
+                    leftDown++;
+                }
+                d[i][j] = Math.min(left, Math.min(down, leftDown));
+            } // end j for loop
+        } // end i for loop
+        
+        // return
+        return d[w1Len][w2Len];
+    }
+    
+    // Time Complexity: O(mn) as it follows quite straightforward for the inserted loops.
+    // Space Complexity:O(mn) since at each step we keep the results of all previous computations.
+}
