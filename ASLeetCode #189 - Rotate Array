@@ -1,0 +1,28 @@
+// Instructions: Given an array, rotate the array to the right by k steps, where k is non-negative.
+
+class Solution {
+    public void rotate(int[] nums, int k) 
+    {
+        // Variables
+        int[] temp = new int[nums.length]; // holds the values of the new array that will be copied over
+        
+        // first, get the values and put them in their new spots in temp array
+        for(int i = 0; i < nums.length; i++)
+        {
+            temp[(i + k) % nums.length] = nums[i];
+        } // end for loop
+        
+        
+        // Now add the values to the back in the correct spots in nums[]
+        for(int i = 0; i < nums.length; i++)
+        {
+            nums[i] = temp[i];
+        }
+        
+    } // end function
+    
+    // Time Complexity: O(n) b/c one pass is used to put the numbers in the new array. And another pass
+    // to copy the new array to the original one.
+    
+    // Space Complexity: O(n). b/c I used another array of the same size.
+}
