@@ -1,0 +1,72 @@
+/* Instructions: Given an m x n integers matrix, return the length of the longest increasing path in matrix.
+ *
+ * From each cell, you can either move in four directions: left, right, up, or down. You may not move diagonally or move outside the boundary 
+ * (i.e., wrap-around is not allowed).
+ */
+
+class Solution 
+{
+    // Global Variables
+    private static final int[][] dirs = {{0,1}, {1,0}, {0,-1}, {-1,0}};
+    private int m, n;
+    
+    public int longestIncreasingPath(int[][] matrix) 
+    {
+        // Check if the matrix is empty, if it is, return 0
+        if(matrix.length == 0)
+        {
+            return 0;
+        }
+        
+        // Variables
+        m = matrix.length;
+        n = matrix[0].length;
+        int[][] cache = new int[m][n];
+        int result = 0;
+        
+        // Get the longest Path
+        for(int i = 0; i < m; i++)
+        {
+            for(int j = 0; j < n; j++)
+            {
+                result = Math.max(result, dfs(matrix, i, j, cache));
+            } // end j for loop
+        } // end i for loop
+        
+        // return
+        return result;
+    } // end function
+    
+    private int dfs(int[][] matrix, int i, int j, int[][] cache)
+    {
+        if(cache[i][j] != 0)
+        {
+            // there's a value in the cache already, return that value
+            return cache[i][j];
+        }
+        
+        // Variables
+        int x;
+        int y;
+        
+        // else get the value and return
+        for(int[] d : dirs)
+        {
+            x = i + d[0];
+            y = j + d[1];
+            // make sure you're in the boundaries and current value > matrix[i][j]
+            if(x >= 0 && x < m && y >= 0 && y < n && matrix[x][y] > matrix[i][j])
+            {
+                cache[i][j] = Math.max(cache[i][j], dfs(matrix, x, y, cache));
+            }
+        } // end for each
+        
+        // return
+        return ++cache[i][j];
+    }
+    
+    /* Time complexity : O(mn). Each vertex/cell will be calculated once and only once, and each edge will be visited once and only once. The total time complexity is then O(V+E). V is the total number of vertices and E is the total number of edges. In our problem, O(V) = O(mn), O(E) = O(4V) = O(mn).
+    
+    Space complexity : O(mn)O(mn). The cache dominates the space complexity.
+    */
+}
