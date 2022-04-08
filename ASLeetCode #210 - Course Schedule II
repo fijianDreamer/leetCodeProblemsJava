@@ -1,0 +1,115 @@
+/* Instructions: There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. You are given an array prerequisites where 
+ * prerequisites[i] = [ai, bi] indicates that you must take course bi first if you want to take course ai.
+ *
+ * For example, the pair [0, 1], indicates that to take course 0 you have to first take course 1.
+ * Return the ordering of courses you should take to finish all courses. If there are many valid answers, return any of them. If it is impossible to 
+ * finish all courses, return an empty array.
+ */
+
+class Solution 
+{
+    // Global Variables
+    static int WHITE = 1;
+    static int GRAY = 2;
+    static int BLACK = 3;
+    boolean isPossible;
+    Map<Integer, Integer> color;
+    Map<Integer, List<Integer>> adjList;
+    List<Integer> topologicalOrder;
+    
+    // Initialize the rest of the variables
+    private void initialize(int numCourses)
+    {
+        this.isPossible = true;
+        this.color = new HashMap<Integer, Integer>();
+        this.adjList = new HashMap<Integer, List<Integer>>();
+        this.topologicalOrder = new ArrayList<Integer>();
+        
+        // Make all vertices white (default color)
+        for(int i = 0; i < numCourses; i++)
+        {
+            this.color.put(i, WHITE);
+        } // end for loop
+    } // end function
+    
+    private void dfs(int node)
+    {
+        // Base Case: Cycle found, return
+        if(!this.isPossible)
+        {
+            return;
+        }
+        
+        // Start the recursion by making the node gray
+        this.color.put(node, GRAY);
+        
+        // Traverse on the neighboring vertices
+        for(Integer neighbor : this.adjList.getOrDefault(node, new ArrayList<Integer>()))
+        {
+            if(this.color.get(neighbor) == WHITE)
+            {
+                this.dfs(neighbor);
+            }
+            else if(this.color.get(neighbor) == GRAY)
+            {
+                // There is an edge to a GRAY vertex that represents a cycle
+                this.isPossible = false;
+            }
+        } // end for loop
+        
+        // The recursion is over, so mark the node as BLACK
+        this.color.put(node, BLACK);
+        this.topologicalOrder.add(node);
+    } // end function
+    
+    public int[] findOrder(int numCourses, int[][] prerequisites) 
+    {
+        // Initialize the variables
+        this.initialize(numCourses);
+        int destination;
+        int source;
+        
+        // Now create the adjacency list representation of the graph
+        for(int i = 0; i < prerequisites.length; i ++)
+        {
+            destination = prerequisites[i][0];
+            source = prerequisites[i][1];
+            List<Integer> theList = adjList.getOrDefault(source, new ArrayList<Integer>());
+            theList.add(destination);
+            adjList.put(source, theList);
+        } // end for loop
+        
+        // If the node isn't processes, then call dfs on that node
+        for(int i = 0; i < numCourses; i++)
+        {
+            if(this.color.get(i) == WHITE)
+            {
+                this.dfs(i);
+            }
+        } // end for loop
+        
+        int[] order;
+        if(this.isPossible)
+        {
+            order = new int[numCourses];
+            for(int i = 0; i < numCourses; i++)
+            {
+                order[i] = this.topologicalOrder.get(numCourses - i - 1);
+            } // end for loop
+        }
+        else
+        {
+            order = new int[0];
+        }
+        return order;
+    }
+    
+    /* Time Complexity: O(V + E) where V represents the number of vertices and E represents the number of edges. Essentially we iterate through each node and each vertex in the graph once and only once.
+    
+    Space Complexity: We use the adjacency list to represent our graph initially. The space occupied is defined by the number of edges because for each node as the key, we have all its adjacent nodes in the form of a list as the value. Hence, O(E)
+
+Additionally, we apply recursion in our algorithm, which in worst case will incur O(E) extra space in the function call stack.
+
+To sum up, the overall space complexity is O(V + E).
+    */
+}
