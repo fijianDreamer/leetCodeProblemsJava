@@ -1,0 +1,67 @@
+/* Instructions: A path in a binary tree is a sequence of nodes where each pair of adjacent nodes in the sequence has an edge connecting them. A node 
+ * can only appear in the sequence at most once. Note that the path does not need to pass through the root.
+ *
+ * The path sum of a path is the sum of the node's values in the path.
+ *
+ * Given the root of a binary tree, return the maximum path sum of any non-empty path.
+ */
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution 
+{
+    // Global Variable
+    int maxSum = Integer.MIN_VALUE;
+    
+    public int maxGain(TreeNode node)
+    {
+        // Base Case: root is null
+        if(node == null)
+        {
+            return 0;
+        }
+        
+        // Variables
+        int leftGain;
+        int rightGain;
+        int newPath;
+        
+        // Get the max sum on the left & right sub-trees of the node
+        leftGain = Math.max(maxGain(node.left), 0);
+        rightGain = Math.max(maxGain(node.right), 0);
+        
+        // The place to start a new path where "node" is the highest node
+        newPath = node.val + leftGain + rightGain;
+        
+        // Update maxSum if it's better to start from a new path
+        maxSum = Math.max(maxSum, newPath);
+        
+        // Return the maxGain if continuing on the same path (for recursion)
+        return node.val + Math.max(leftGain, rightGain);
+    }
+    
+    public int maxPathSum(TreeNode root) 
+    {
+        maxGain(root);
+        return maxSum;
+    }
+    
+    // Time Complexity: O(N), where N is # of nodes, since we visit each node not more than 2 times.
+    
+    // Space Complexity: O(H), where H is a tree height, to keep the recursion stack. In the average
+    // case of balanced tree, the tree height H = logN, in the worst case of skewed tree, 
+    // H = N.
+}
