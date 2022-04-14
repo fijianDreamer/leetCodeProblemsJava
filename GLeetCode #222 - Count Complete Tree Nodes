@@ -1,0 +1,51 @@
+/* Instructions: Given the root of a complete binary tree, return the number of the nodes in the tree.
+ *
+ * According to Wikipedia, every level, except possibly the last, is completely filled in a complete binary tree, and all nodes in the last level are as 
+ * far left as possible. It can have between 1 and 2h nodes inclusive at the last level h.
+ *
+ * Design an algorithm that runs in less than O(n) time complexity.
+ */
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution 
+{
+    public int countHelper(TreeNode node)
+    {
+        // Base Case: At the end of the tree, node is null
+        if(node == null)
+        {
+            return 0;
+        }
+        // else add 1 to the # of nodes, and recurse
+        return 1 + countHelper(node.left) + countHelper(node.right);
+    }
+    
+    public int countNodes(TreeNode root) 
+    {
+        // if the root is empty, return 0
+        if(root == null)
+        {
+            return 0;
+        }
+        // helper function -- bfs
+        return countHelper(root);
+    }
+    
+    // Time Complexity: O(N)
+    
+    // Space Complexity: O(d)=O(logN) to keep the recursion stack, where d is a tree depth.
+}
