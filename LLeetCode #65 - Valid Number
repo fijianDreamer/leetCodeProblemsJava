@@ -1,0 +1,83 @@
+/* Instructions: A valid number can be split up into these components (in order):
+ *
+ * A decimal number or an integer.
+ * (Optional) An 'e' or 'E', followed by an integer.
+ * A decimal number can be split up into these components (in order):
+ *
+ * (Optional) A sign character (either '+' or '-').
+ * One of the following formats:
+ * One or more digits, followed by a dot '.'.
+ * One or more digits, followed by a dot '.', followed by one or more digits.
+ * A dot '.', followed by one or more digits.
+ * An integer can be split up into these components (in order):
+ *
+ * (Optional) A sign character (either '+' or '-').
+ * One or more digits.
+ * For example, all the following are valid numbers: ["2", "0089", "-0.1", "+3.14", "4.", "-.9", "2e10", "-90E3", "3e+7", "+6e-1", "53.5e93", 
+ * "-123.456e789"], while the following are not valid numbers: ["abc", "1a", "1e", "e3", "99e2.5", "--6", "-+3", "95a54e53"].
+ *
+ * Given a string s, return true if s is a valid number.
+ */
+
+class Solution 
+{
+    public boolean isNumber(String s) 
+    {
+        // Variables
+        boolean seenDigit = false;
+        boolean seenExponent = false;
+        boolean seenDot = false;
+        char curr;
+        
+        // Go thru s one by one. if it doesnt pass the case, return false
+        for (int i = 0; i < s.length(); i++) 
+        {
+            curr = s.charAt(i);
+            if (Character.isDigit(curr)) 
+            {
+                seenDigit = true;
+            } 
+            else if (curr == '+' || curr == '-') 
+            {
+                // if curr is a sign, check to see if it's the 1st character or followed by an e/E
+                if (i > 0 && s.charAt(i - 1) != 'e' && s.charAt(i - 1) != 'E') 
+                {
+                    return false;
+                }
+            } 
+            else if (curr == 'e' || curr == 'E') 
+            {
+                // if you already saw an exponent, but not a digit, return false
+                if (seenExponent || !seenDigit) 
+                {
+                    return false;
+                }
+                seenExponent = true;
+                seenDigit = false; // reset the digit
+            } 
+            else if (curr == '.') 
+            {
+                // if you already saw a decimal, or exponent, return false
+                if (seenDot || seenExponent) 
+                {
+                    return false;
+                }
+                seenDot = true;
+            } 
+            else 
+            {
+                return false;
+            }
+        } // end for loop
+        
+        return seenDigit;
+    }
+    
+    /* Time Complexity: O(N), where N is the length of s. We simply iterate over the input once. The
+     * # of operations we perform for each character in the input is independent of the length of the
+     * string, and therefore only requires constant time. This results in N * O(1) = O(N).
+     *
+     * Space Complexity: Space complexity: O(1). Regardless of the input size, we only store 3
+     * variables, seenDigit, seenExponent, and seenDot.
+     */
+}
