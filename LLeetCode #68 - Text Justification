@@ -1,0 +1,139 @@
+/* Instructions: Given an array of strings words and a width maxWidth, format the text such that each line has exactly maxWidth characters and is 
+ * fully (left and right) justified.
+ *
+ * You should pack your words in a greedy approach; that is, pack as many words as you can in each line. Pad extra spaces ' ' when necessary so that 
+ * each line has exactly maxWidth characters.
+ *
+ * Extra spaces between words should be distributed as evenly as possible. If the number of spaces on a line does not divide evenly between words, 
+ * the empty slots on the left will be assigned more spaces than the slots on the right.
+ * 
+ * For the last line of text, it should be left-justified and no extra space is inserted between words.
+ *
+ * Note:
+ *
+ * A word is defined as a character sequence consisting of non-space characters only.
+ * Each word's length is guaranteed to be greater than 0 and not exceed maxWidth.
+ * The input array words contains at least one word.
+ */
+
+class Solution 
+{
+    public List<String> fullJustify(String[] words, int maxWidth) 
+    {
+        // each line has maxWidth of characters, including spaces
+        // last line is left-justified (on the left side)
+        // words has to be outputted in order
+        // while each word + 1 space is < maxWidth, add to line
+        // go to next line
+        
+        // Variables
+        boolean isLastLine = false; // so we know to left-justify
+        // if there are more words, not the last line
+        int wordCount = 0; // keep track of the # of words
+        int lengthCount = 0; // keep track of the length in each line
+        int startIndex = 0; // where to start in each line
+        int spaceCount = 0; // calculate # of spaces needed to insert
+        List<String> output = new ArrayList<>();
+        
+        for(int i = 0; i < words.length; i++)
+        {
+            // if we have enough words to fill the maxWidth, calculate the spaces needed, add the
+            // words to output, and update startIndex
+            if(words[i].length() + lengthCount + wordCount > maxWidth)
+            {
+                spaceCount = maxWidth - lengthCount;
+                output.add(buildString(words, startIndex, i-1, spaceCount, maxWidth));
+                // setup for next line
+                lengthCount = words[i].length(); 
+                wordCount = 1;
+                startIndex = i;
+            }
+            else
+            {
+                // you can add more words to that line
+                wordCount++;
+                lengthCount += words[i].length();
+            }
+        } // end of for loop
+        
+        // Now we build the last line
+        if(wordCount > 0)
+        {
+            output.add(buildLastString(words, startIndex, words.length - 1, maxWidth));
+        }
+        
+        return output;
+    } // end of function
+    
+    // helper function to build the strings for output
+    public String buildString(String[]words, int i, int j, int numSpaces, int maxWidth)
+    {
+        // Variables
+        StringBuilder sb = new StringBuilder();
+        int n = j - i;
+        int internalSpace = 0;
+        int extraSpace = 0;
+        
+        if(n > 0)
+        {
+            internalSpace = numSpaces / n;
+            extraSpace = numSpaces % n;
+        }
+        
+        // while i < j, add the words to sb, calculate & add spaces 
+        while(i < j)
+        {
+            sb.append(words[i]); // add the word from words
+            for(int k = 0; k < internalSpace; k++)
+            {
+                sb.append(' '); // # of spaces between each word
+            }
+            if(extraSpace-- > 0)
+            {
+                sb.append(' '); // add 1 of the remainder spaces
+            }
+            i++; // update i
+        } // end while loop
+        
+        // Now add the remainder word and spaces. Then return
+        sb.append(words[j]);
+        addExtraSpace(maxWidth, sb);
+        
+        return sb.toString();
+        
+    } // end of buildString function
+        
+    // Helper function to build the last line
+    public String buildLastString(String[] words, int i, int j, int maxWidth)
+    {
+        // Variable
+        StringBuilder sb = new StringBuilder();
+        while(i < j)
+        {
+            sb.append(words[i]); // add the word
+            sb.append(' '); // add a space
+            i++; // go to next word
+        }
+        
+        // last line has to be left-justified. So add the word and fill the remaining with space.
+        sb.append(words[j]);
+        addExtraSpace(maxWidth, sb);
+        
+        // return
+        return sb.toString();
+    }
+    
+    // Helper function to add the remaining spaces
+    public void addExtraSpace(int maxWidth, StringBuilder sb)
+    {
+        // Variables
+        String alreadyBuilt = sb.toString(); // the string so far
+        int extraSpace = maxWidth - alreadyBuilt.length(); // # of space needed
+        while(extraSpace-- > 0)
+        {
+            sb.append(' '); // add all the necessary spaces
+        }
+    } // end of addExtraSpace function
+
+    // Time Complexity: O(n) b/c we only go through the array of strings once
+}
