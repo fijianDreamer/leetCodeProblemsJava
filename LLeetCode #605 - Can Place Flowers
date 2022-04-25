@@ -1,0 +1,45 @@
+/* Instructions: You have a long flowerbed in which some of the plots are planted, and some are not. However, flowers cannot be planted in adjacent 
+ * plots.
+ *
+ * Given an integer array flowerbed containing 0's and 1's, where 0 means empty and 1 means not empty, and an integer n, return if n new flowers can be 
+ * planted in the flowerbed without violating the no-adjacent-flowers rule.
+ */
+
+class Solution 
+{
+    public boolean canPlaceFlowers(int[] flowerbed, int n) 
+    {
+        // Variables
+        int canPlant = 0;
+        boolean emptyLeftPlot = false;
+        boolean emptyRightPlot = false;
+        
+
+        for(int i = 0; i < flowerbed.length; i++)
+        {
+            // Go through the flowerbed, and see if that spot is empty ('0')  
+            if(flowerbed[i] == 0)
+            {
+                // Check if the left & right sides are empty as well
+                emptyLeftPlot = (i == 0) || (flowerbed[i-1] == 0); // make sure not to go out of bounds
+                emptyRightPlot = (i == flowerbed.length - 1) || (flowerbed[i+1] == 0);
+                // if both plots are empty, we can plant here
+                if(emptyLeftPlot && emptyRightPlot)
+                {
+                    flowerbed[i] = 1;
+                    canPlant++;
+                    if(canPlant >= n)
+                    {
+                        return true;
+                    }
+                }
+            }
+        } // end for loop
+        
+        // return
+        return canPlant >= n;
+    }
+    
+    // Time Complexity: O(n). A single scan of the flowerbed array of size n is done.
+    // Space Complexity: Constant extra space is used.
+}
