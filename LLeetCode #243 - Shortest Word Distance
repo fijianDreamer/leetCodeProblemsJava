@@ -1,0 +1,45 @@
+/* Instructions: Given an array of strings wordsDict and two different strings that already exist in the array word1 and word2, return the shortest 
+ * distance between these two words in the list.
+ */
+
+class Solution 
+{
+    public int shortestDistance(String[] wordsDict, String word1, String word2) 
+    {
+        // Variables
+        int word1Index = -1; // -1 to indicate it's not in the array
+        int word2Index = -1;
+        int wordDistance = wordsDict.length; // returns the shortest distance between the two indexes
+        // started with the length of wordsDict since that can be the worst possible case
+        
+        // Step through the wordsDict, if a word matches word1 or word2, save the index
+        for(int i = 0; i < wordsDict.length; i++)
+        {
+            if(wordsDict[i].equals(word1))
+            {
+                word1Index = i;
+            }
+            else if(wordsDict[i].equals(word2))
+            {
+                word2Index = i;
+            }
+            // Now that we have the indexes, get the absoult min distance. the words can have multiple
+            // instances, so that's why we're checking in the for loop
+            // wordDistance = | word1Index - word2Index |
+            if(word1Index != -1 && word2Index != -1)
+            {
+                 wordDistance = Math.min(wordDistance, Math.abs(word1Index - word2Index));   
+            }
+        } // end of for loop
+        
+
+        
+        // return
+        return wordDistance;
+    } // end of function
+    
+    // Time Complexity: O(N⋅M) where N is the # of words in the input list, and M is the total length of
+    // two input words.
+    
+    // Space Complexity: O(1), since no additional space is allocated.
+}
