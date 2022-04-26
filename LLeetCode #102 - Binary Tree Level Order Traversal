@@ -1,0 +1,74 @@
+/* Instructions: Given the root of a binary tree, return the level order traversal of its nodes' values. (i.e., from left to right, level by level).
+ *
+ * Input: root = [3,9,20,null,null,15,7]
+ * Output: [[3],[9,20],[15,7]]
+ *
+ * Input: root = [1]
+ * Output: [[1]]
+ *
+ * Input: root = []
+ * Output: []
+ */
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution 
+{
+    // Variables
+    List<List<Integer>> levelArray = new ArrayList<List<Integer>>();
+    
+    public void levelOrderHelper(TreeNode node, int level)
+    {
+        // Start the current level in levelArray
+        if(levelArray.size() == level)
+        {
+            levelArray.add(new ArrayList<Integer>());
+        }
+        
+        // Add the current level (the value of the nodes) to levelArray
+        levelArray.get(level).add(node.val);
+        
+        // As long as the children are not null, call (recurse) til we get all the levels
+        if(node.left != null)
+        {
+            levelOrderHelper(node.left, level + 1);
+        }
+        if(node.right != null)
+        {
+            levelOrderHelper(node.right, level + 1);
+        }
+    }
+    
+    public List<List<Integer>> levelOrder(TreeNode root) 
+    {
+        // if the value is null, don't output that
+        // output shows we start at the root as the first level, and then proceed to next level
+        // level-by-level means using bfs - breadth first search
+        // output also shows we display the nodes' values from left to right
+        
+        if(root == null)
+        {
+            return levelArray;
+        }
+        
+        // call the helper. Passing in root and level, current level is 0
+        levelOrderHelper(root, 0);
+        return levelArray;
+    }
+    // Time Complexity: O(N) since each node is processed exactly once.
+    
+    // Space Complexity: O(N) to keep the output structure which contains N node values.
+}
