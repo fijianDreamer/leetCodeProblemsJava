@@ -1,0 +1,65 @@
+/* Instructions: Given the root of a binary tree, turn the tree upside down and return the new root.
+ *
+ * You can turn a binary tree upside down with the following steps:
+ *
+ * The original left child becomes the new root.
+ * The original root becomes the new right child.
+ * The original right child becomes the new left child.
+ */
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution 
+{
+    public TreeNode upsideDownBinaryTree(TreeNode root) 
+    {
+        // 3 steps - "3 levels that we go thru"
+        // does the tree have nodes? 0 or 1 nodes == return root
+        if(root == null || root.left == null)
+        {
+            return root;
+        }
+
+        // Variables
+        TreeNode current = root;
+        TreeNode left = root.left;
+        TreeNode right = root.right;
+        TreeNode leftNext; // left's left node
+        TreeNode rightNext; // left's right node
+        
+        // use dfs to go down the left side of the tree
+        while(left != null) 
+        {
+            // Assign the children
+            leftNext = left.left; 
+            rightNext = left.right; 
+            
+            // Level 2: Root is the new right child, reassign the original right
+            left.right = current; // root becomes the new right child
+            left.left = right;
+            
+            current = left;
+            left = leftNext;
+            right = rightNext;
+        }
+        
+        root.left = null;
+        root.right = null;
+        
+        // return
+        return current;
+    }
+}
