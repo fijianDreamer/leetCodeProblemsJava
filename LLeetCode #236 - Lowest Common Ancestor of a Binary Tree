@@ -1,0 +1,70 @@
+/* Instructions: Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.
+ *
+ * According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes p and q as the lowest node in T that has 
+ * both p and q as descendants (where we allow a node to be a descendant of itself).”
+ */
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution 
+{
+    // Global Variables
+    private TreeNode result;
+    
+    public Solution()
+    {
+        this.result = null;
+    }
+    
+    private boolean recurseTree(TreeNode currentNode, TreeNode p, TreeNode q)
+    {
+        // Base Case: At the end of the branch - return false
+        if(currentNode == null)
+        {
+            return false;
+        }
+        
+        // Variables - flags for p, q and mid values
+        int left;
+        int right;
+        int mid;
+        
+        // Left Recursion - If left recursion returns true, set left = 1 (true), else left = 0 (false)
+        left = this.recurseTree(currentNode.left, p, q) ? 1 : 0;
+        
+        // Right Recursion
+        right = this.recurseTree(currentNode.right, p, q) ? 1 : 0;
+        
+        // If the currentNode is p or q
+        mid = (currentNode == p || currentNode == q) ? 1 : 0;
+        
+        // If 2 of the flags are true, set result to currentNode
+        if(left + right + mid >= 2)
+        {
+            this.result = currentNode;
+        }
+        
+        // Return true if 1 of 3 flags are true
+        return (left + right + mid > 0);
+    }
+    
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) 
+    {
+        // Traverse the tree
+        this.recurseTree(root, p, q);
+        return this.result;
+    }
+    
+    // Time Complexity: O(N), where N is the # of nodes in the binary tree. In the worst case we might
+    // be visiting all the nodes of the binary tree.
+    
+    // Space Complexity: O(N). This is because the maximum amount of space utilized by the recursion
+    // stack would be N since the height of a skewed binary tree could be N.
+}
