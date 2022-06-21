@@ -1,0 +1,27 @@
+// Instructions: Given an integer array nums, return true if any value appears at least twice in the array, and return false if every element is distinct.
+
+class Solution 
+{
+    public boolean containsDuplicate(int[] nums) 
+    {
+        // sort the array in ascending order
+        Arrays.sort(nums);
+        
+        // go through the array. if nums1 == nums2, return true
+        for(int i = 0; i < nums.length-1; i++)
+        {
+            if(nums[i] == nums[i+1])
+            {
+                return true;
+            }
+        }
+        
+        // else, return false
+        return false;
+    }
+    
+    // Time Complexity: We used sorting, which is  O(n log n) and we go through the array once, which
+    // is O(n). Due to the sort being the more dominate step, the time complexity is O(n log n)
+    
+    // Space Complexity: O(1) b/c we never use any addition space
+}
