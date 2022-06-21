@@ -1,0 +1,39 @@
+/* Instructions: Given a non-empty array of integers nums, every element appears twice except for one. Find that single one.
+ *
+ * You must implement a solution with a linear runtime complexity and use only constant extra space.
+ */
+
+class Solution 
+{
+    public int singleNumber(int[] nums) 
+    {
+        // Use a hash table. If there is a #, put it in the hash table, n +1 to total count
+        
+        // Variables
+        HashMap<Integer, Integer> hTable = new HashMap<>();
+        
+        // get the values in nums and put it in the hash table. if there is a value already, +1
+        for(int i : nums)
+        {
+            hTable.put(i, hTable.getOrDefault(i, 0) + 1);
+        }
+        
+        // Now go through and see which value only showed up once. return that
+        for(int i : nums)
+        {
+            if(hTable.get(i) == 1)
+            {
+                return i;
+            }
+        }
+        
+        // return
+        return 0;
+    }
+    
+    // Time Complexity: O(n*1) => O(n) because time complexity for for loop is O(n). Hash Map time
+    // complexity is O(1), (pop).
+    
+    // Space Complexity: O(n) because the space required by the hash map, hTable, is equal to the # of
+    // elements in nums
+}
