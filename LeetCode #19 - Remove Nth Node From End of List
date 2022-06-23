@@ -1,0 +1,53 @@
+// Instructions: Given the head of a linked list, remove the nth node from the end of the list and return its head.
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution 
+{
+    public ListNode removeNthFromEnd(ListNode head, int n) 
+    {
+        // the last node count starts at 1, then goes towards the right. i.e. if n = 1, that's
+        // the last node in the list
+        
+        // Variables
+        int count = 0; // gets the length of the list
+        ListNode temp = head;
+        ListNode first = new ListNode(0);
+        first.next = head;
+        
+        // go through the list. when count == n, remove that node
+        while(temp != null)
+        {
+            count++;
+            temp = temp.next;
+        } // end while loop
+        
+        temp = first; // reset
+        count -= n; // to get to the value that needs to get replaced
+        
+        while(count > 0)
+        {
+            temp = temp.next;
+            count--;
+        }
+        
+        // now we're at the value that needs to get removed
+        temp.next = temp.next.next;
+
+        return first.next; // since the first node is given the value 0, that I created
+    }
+    
+    // Time Complexity: O(L) b/c the algorithm traverses through the list 2x. 1st to calculate the
+    // length of the list (L), then to find the L-nth node. Since there are 2L-n operations, it
+    // simplifies to O(L)
+    
+    // Space Complexity: O(1) because we use constant extra space
+}
