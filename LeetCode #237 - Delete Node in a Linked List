@@ -1,0 +1,32 @@
+/* Instructions: Write a function to delete a node in a singly-linked list. You will not be given access to the head of the list, instead you will be 
+ * given access to the node to be deleted directly.
+ *
+ * It is guaranteed that the node to be deleted is not a tail node in the list.
+ */
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution 
+{
+    public void deleteNode(ListNode node) 
+    {
+        // node is the node that is supposed to be deleted
+        ListNode temp = node;
+        temp.val = temp.next.val; // assign the next ListNode's val to temp
+        // now have temp point to the next ListNode or null
+        if(temp.next.next != null)
+        {
+            temp.next = temp.next.next;
+        }
+        else
+        {
+            temp.next = null;
+        }
+    }
+}
