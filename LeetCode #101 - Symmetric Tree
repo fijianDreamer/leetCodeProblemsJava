@@ -1,0 +1,47 @@
+// Instructions: Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution 
+{
+    public boolean isSymmetric(TreeNode root) 
+    {
+        return isMirrored(root, root);
+    }
+    
+    public boolean isMirrored(TreeNode node1, TreeNode node2)
+    {
+        // if both are null, return true
+        if(node1 == null && node2 == null)
+        {
+            return true;
+        }
+        // if one is null and the other isn't, return false
+        if(node1 == null || node2 == null)
+        {
+            return false;
+        }
+        // return whether the two values are the same, and is mirrored
+        return (node1.val == node2.val) && isMirrored(node1.right, node2.left) && isMirrored(node1.left, node2.right);
+    }
+    
+    // Time Complexity: O(n) because we traverse the tree once. Total run time is also O(n) b/c
+    // n is the total # of nodes in the tree
+    
+    // Space Complexity: The # of recursive calls is bound by the height of the tree. Worse case
+    // = tree is linear and height is O(n), so space complexity due to recursive calls on the stack is
+    // O(n)
+}
