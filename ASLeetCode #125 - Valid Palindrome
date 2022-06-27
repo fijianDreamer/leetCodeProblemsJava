@@ -33,3 +33,41 @@ class Solution
         return true;
     } // end of function
 }
+
+// June 26 Version
+
+class Solution 
+{
+    public boolean isPalindrome(String s) 
+    {
+        // get rid of all the "noise"
+            // convert from uppercase to lowercase
+            // remove all non-alphanumeric characters, which includes spaces
+        // Now, using 2 pointers, compare the characters, if !match, return false, else continue til you reach the middle
+
+        for(int i = 0, j = s.length()-1; i < j; i++, j--)
+        {
+            // check to see if it's a character or a digit. If not, move on to the next one
+            while(i < j && !Character.isLetterOrDigit(s.charAt(i)))
+            {
+                i++;
+            }
+            while(i < j && !Character.isLetterOrDigit(s.charAt(j)))
+            {
+                j--;
+            }
+            
+            if(Character.toLowerCase(s.charAt(i)) != Character.toLowerCase(s.charAt(j)))
+            {
+                return false;
+            }
+        } // end for loop
+        
+        // return
+        return true;
+    }
+    
+    // Time Complexity: O(n) b/c go through the whole string one time at most.
+    
+    // Space Complexity: O(1) b/c no extra space is required
+}
