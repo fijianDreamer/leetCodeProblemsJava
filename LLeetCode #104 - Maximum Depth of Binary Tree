@@ -50,3 +50,24 @@ class Solution
     // balanced), the height of the tree would be log(N). Therefore, the space complexity in this case
     // would be \mathcalO(log(N)).
 }
+
+/*
+------------------------------------------------------------------------------------------
+How I solved the problem on 7/31/24
+
+    public int maxDepth(TreeNode root) 
+    {
+        if(root == null)
+        {
+            return 0;
+        }
+
+        // else go down the left & right side
+        int leftSide = maxDepth(root.left) + 1;
+        int rightSide = maxDepth(root.right) + 1;
+
+        return Math.max(leftSide, rightSide);   
+    }
+------------------------------------------------------------------------------------------
+*/
+
